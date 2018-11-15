@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Demo </title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!--Custom Style CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-12 col-md-6 border d-flex justify-content-center">
+                <img id="yourImg" height="300px" class="pr-1" src="assets/images/placeholder.jpg">
+            </div>
+            <div class="col-sm-12 col-md-6 border d-flex justify-content-center">
+                <img id="celebImg" height="300px" class="pl-1" src="http://www3.pictures.gi.zimbio.com/Cannes+Ocean+Thirteen+After+Party+7w8f5kCR9fKx.jpg">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <div class="custom-file mb-3">
+                        <input id="myImageUpload" name="file" type="file" class="cloudinary-fileupload custom-file-input"
+                            accept=".jpg,.png"></input>
+                        <label class="custom-file-label" for="myImageUpload">Choose file</label>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary" id="compareButton">Compare</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <p>Percentage that your image compares to Brad Pitt: <span id="comparePercent"></span></p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT SECTION -->
+    <!-- ================================= -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!--Add JS needed for cloudniary-->
+    <script src="assets/javascript/cloudinary/jquery.ui.widget.js"></script>
+    <script src="assets/javascript/cloudinary/jquery.iframe-transport.js"></script>
+    <script src="assets/javascript/cloudinary/jquery.fileupload.js"></script>
+    <script src="assets/javascript/cloudinary/jquery.cloudinary.js"></script>
+    <!--Custom javascript-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var facePlusPlusApiKey = "JJQp0B8tMyOhqZrJ-xzyZSwSG95sOXLM";
+            var facePlusPlusApiSecret = "N5PgkpS-JtqonjgCVz2yB89FGbpoITrP";
+            $("#compareButton").attr("disabled", true);
+
+            function compareFace(celebImageUrl, myImageUrl) {
+
+                console.log()
+
+                var queryURL = `https://api-us.faceplusplus.com/facepp/v3/compare?api_key=${facePlusPlusApiKey}&api_secret=${facePlusPlusApiSecret}&image_url1=${myImageUrl}&image_url2=${celebImageUrl}`;
+                console.log(queryURL);
+
+                $.ajax({
+                    url: queryURL,
+                    method: "POST",
+                    error: function (resp) {
+                        console.log(resp);
+                    }
+                }).then((response) => {
+
+                    var comparePercentage = response.confidence ? response.confidence : 0;
+
+                    $("#comparePercent").text(comparePercentage);
+                    console.log(response);
+                });
+            }
+
+            /*     $.cloudinary.config({ cloud_name: 'dxtyykqf6', secure: true }); */
+
+            if ($.fn.cloudinary_fileupload !== undefined) {
+
+                $('#myImageUpload').unsigned_cloudinary_upload("ftfp21bf",
+                    { cloud_name: 'dxtyykqf6', tags: 'browser_uploads' }
+                )
+                    .bind('cloudinarydone', function (e, data) {
+
+                        $("#yourImg").attr("src", data.result.url);
+                        $("#compareButton").attr("disabled", false);
+                    })
+                    .bind('cloudinaryprogress', function (e, data) {
+
+                        $("#compareButton").attr("disabled", true);
+                        $("#comparePercent").text("");
+
+                        var progress = Math.round((data.loaded * 100.0) / data.total) + "%";
+
+                        $(".progress-bar").width(progress);
+                    });
+            }
+
+            $("#compareButton").on("click", function () {
+
+                var celebImageUrl = $("#celebImg").attr("src");
+                var myImageUrl = $("#yourImg").attr("src")
+                compareFace(celebImageUrl, myImageUrl);
+            });
+        });
+    </script>
+</body>
+
+</html>
