@@ -68,7 +68,7 @@ $(document).ready(function () {
             },
 
             function error(err) {
-
+                console.log(err);
             },
 
             function complete() {
