@@ -12,7 +12,7 @@
 
 <body>
 	<!-- Jumbotron that contains "rules" of the game -->
-	<div class="jumbotron jumbotron-fluid">
+	<div class="jumbotron jumbotron-fluid mb-0 text-center">
 		<div class="container">
 			<h1 class="display-4">Dopplegangers!</h1>
 			<p class="lead">
@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<!-- navbar w/ search, random, and login pages -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
 		<a class="navbar-brand" href="#">***Dopplegangers Logo***</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
 		 aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@
 					</div>
 					<div class="photosSearch container">
 						<div class="row">
-							<div class="col-md-6 myPhoto">
+							<div class="col-md-6 text-center myPhoto">
 								<!-- This section will be where we input and display personal photo -->
 								<img id="yourImg" hspace="50px" vspace="50px" height="300px" class="pr-1" src="assets/images/placeholder.jpg">
 								<div class="custom-file mb-3">
@@ -68,15 +68,15 @@
 									<label class="custom-file-label" for="myImageUpload">Choose file</label>
 								</div>
 							</div>
-							<div class="col-md-6 searchPhoto">
+							<div class="col-md-6 text-center searchPhoto">
 								<!-- Here there will be a search button and the displayed photo of celebrity -->
 								<img id="celebImg" hspace="50px" vspace="50px" height="300px" class="pl-1" src="http://www3.pictures.gi.zimbio.com/Cannes+Ocean+Thirteen+After+Party+7w8f5kCR9fKx.jpg">
 								<div class="searchForm">
-									<form class="searchForm">
+									<form class="form-inline justify-content-center searchForm">
 										<label for="searchLabel"></label>
-										<input type="text" id="celebritySearch" placeholder="Search for a Celebrity">				
+										<input class="form-control" type="text" id="celebritySearch" placeholder="Search for a Celebrity">				
 										<!-- This button will trigger our AJAX call to TMDB API -->
-										<input id="tdmbSubmit" type="submit" value="Search Celebrity">
+										<input class="btn btn-primary" id="tdmbSubmit" type="submit" value="Search Celebrity">
 									</form>						
 								</div>
 							</div>
