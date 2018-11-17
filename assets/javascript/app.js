@@ -1,5 +1,5 @@
-    // Initialize Firebase
-    var config = {
+// Initialize Firebase
+var config = {
     apiKey: "AIzaSyD0ZvalX1bGNXAmc6BQZd8m9iJWIbl-4hQ",
     authDomain: "doppelgangers-d712f.firebaseapp.com",
     databaseURL: "https://doppelgangers-d712f.firebaseio.com",
@@ -16,8 +16,6 @@ $(document).ready(function () {
     $("#compareButton").attr("disabled", true);
 
     function compareFace(celebImageUrl, myImageUrl) {
-
-        console.log()
 
         myImageUrl = encodeURIComponent(myImageUrl);
         celebImageUrl = encodeURIComponent(celebImageUrl);
@@ -40,7 +38,7 @@ $(document).ready(function () {
         });
     }
 
-    
+
     $("#myImageUpload").on("change", function (event) {
 
         //Disable compare button
@@ -75,7 +73,7 @@ $(document).ready(function () {
 
             function complete() {
                 storageRef.getDownloadURL()
-                    .then((url) =>{
+                    .then((url) => {
 
                         $("#yourImg").attr("src", url);
                         $("#compareButton").attr("disabled", false);
@@ -83,35 +81,6 @@ $(document).ready(function () {
             }
         );
     });
-    
-
-    /*     $.cloudinary.config({ cloud_name: 'dxtyykqf6', secure: true }); */
-
-    /*
-    if ($.fn.cloudinary_fileupload !== undefined) {
-
-        $('#myImageUpload').unsigned_cloudinary_upload("ftfp21bf",
-            {
-                cloud_name: 'dxtyykqf6', tags: 'browser_uploads',
-                folder: 'NW-Project-1'
-            }
-        )
-            .bind('cloudinarydone', function (e, data) {
-
-                $("#yourImg").attr("src", data.result.url);
-                $("#compareButton").attr("disabled", false);
-            })
-            .bind('cloudinaryprogress', function (e, data) {
-
-                $("#compareButton").attr("disabled", true);
-                $("#comparePercent").text("");
-
-                var progress = Math.round((data.loaded * 100.0) / data.total) + "%";
-
-                $(".progress-bar").width(progress);
-            });
-    }
-    */
 
     $("#compareButton").on("click", function () {
 
