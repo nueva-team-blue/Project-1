@@ -28,6 +28,19 @@
     border-color: #34003C;
 }
 
+.progress-bar {
+    background-color: #630071;
+}
+
+#tdmbSubmit {
+    width: 140px;
+}
+
+#celebritySearch {
+    width: calc(100% - 140px);
+
+}
+
 /* Primary Color: #34003C */
 /* Secondary Color: #CCCCCC */
 /* Tertiary Color:  White */
