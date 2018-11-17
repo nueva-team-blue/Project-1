@@ -97,7 +97,8 @@
             if ($.fn.cloudinary_fileupload !== undefined) {
 
                 $('#myImageUpload').unsigned_cloudinary_upload("ftfp21bf",
-                    { cloud_name: 'dxtyykqf6', tags: 'browser_uploads' }
+                    { cloud_name: 'dxtyykqf6', tags: 'browser_uploads',
+                    folder: 'NW-Project-1' }
                 )
                     .bind('cloudinarydone', function (e, data) {
 
