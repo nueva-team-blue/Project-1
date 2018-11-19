@@ -9,11 +9,16 @@ var config = {
 };
 firebase.initializeApp(config);
 
+//Hide carousel, results, and about us divs by default
+$("#celebCarouselBody").hide();
+$("#resultsBody").hide();
+$("#aboutUsBody").hide();
+
 
 $(document).ready(function () {
     var facePlusPlusApiKey = "JJQp0B8tMyOhqZrJ-xzyZSwSG95sOXLM";
     var facePlusPlusApiSecret = "N5PgkpS-JtqonjgCVz2yB89FGbpoITrP";
-    $("#compareButton").attr("disabled", true);
+    $("#compareButton, #carouselCompareButton").attr("disabled", true);
 
     function compareFace(celebImageUrl, myImageUrl) {
 
@@ -21,28 +26,21 @@ $(document).ready(function () {
         celebImageUrl = encodeURIComponent(celebImageUrl);
 
         var queryURL = `https://api-us.faceplusplus.com/facepp/v3/compare?api_key=${facePlusPlusApiKey}&api_secret=${facePlusPlusApiSecret}&image_url1=${myImageUrl}&image_url2=${celebImageUrl}`;
-        console.log(queryURL);
 
-        $.ajax({
+        return $.ajax({
             url: queryURL,
             method: "POST",
             error: function (resp) {
                 console.log(resp);
             }
-        }).then((response) => {
-
-            var comparePercentage = response.confidence ? response.confidence : 0;
-
-            $("#comparePercent").text(comparePercentage);
-            console.log(response);
         });
     }
 
 
-    $("#myImageUpload").on("change", function (event) {
+    $(".myImageUpload").on("change", function (event) {
 
         //Disable compare button
-        $("#compareButton").attr("disabled", true);
+        $("#compareButton, #carouselCompareButton").attr("disabled", true);
 
         //Update the progress bar to 0%
         $(".progress-bar").width(0);
@@ -75,17 +73,113 @@ $(document).ready(function () {
                 storageRef.getDownloadURL()
                     .then((url) => {
 
-                        $("#yourImg").attr("src", url);
-                        $("#compareButton").attr("disabled", false);
+                        $(".yourImg").attr("src", url);
+                        $("#compareButton, #carouselCompareButton").attr("disabled", false);
                     });
             }
         );
     });
 
-    $("#compareButton").on("click", function () {
+    //Function where if the hamburger menu button is visible then trigger an on 
+    //click event on that button so it closes the hamburger menu
+    function closeHamburberMenu() {
 
-        var celebImageUrl = $("#celebImg").attr("src");
-        var myImageUrl = $("#yourImg").attr("src")
-        compareFace(celebImageUrl, myImageUrl);
+        if ($('.navbar-toggler').css('display') != "none") {
+
+            if ($(".navbar-collapse").hasClass("show")) {
+                $('.navbar-toggler').click();
+            }
+        }
+    }
+
+    function activateAnimateButton (buttonElement) {
+
+        buttonElement.addClass("active");
+        buttonElement.attr("disabled", true);
+    }
+
+    function deactivateAnimateButton (buttonElement) {
+
+        buttonElement.removeClass("active");
+        buttonElement.attr("disabled", false);
+    }
+
+    function handleCompareButtonClick(buttonElement, percentElement, celebImageUrl) {
+        percentElement.text("");
+        activateAnimateButton(buttonElement);
+
+        var myImageUrl = $(".yourImg").attr("src")
+
+        compareFace(celebImageUrl, myImageUrl)
+            .then((response) => {
+
+                var comparePercentage = response.confidence ? response.confidence : 0;
+
+                percentElement.text(comparePercentage);
+                deactivateAnimateButton(buttonElement);
+            })            
+            .catch( (error) => {
+
+                var errorMessage = "Error comparing image in face++";
+                
+                if (error && error.responseJSON && error.responseJSON.error_message) {
+                    errorMessage = error.responseJSON.error_message;
+                }
+
+                percentElement.html(`<span style="color:red">${errorMessage}</span>`);
+                deactivateAnimateButton(buttonElement);
+            });
+    }
+
+    $("#compareButton").on("click", function() {
+        handleCompareButtonClick($(this), $("#comparePercent"), $("#celebImg").attr("src"));
+    });
+
+    $("#carouselCompareButton").on("click", function() {
+        handleCompareButtonClick($(this), $("#carouselComparePercent"), $("#celebrityCarousel .carousel-item.active img").attr("src"));
+    });
+    
+    //Attach event when user clicks on the default page link
+    $(".homeLink").on("click", function () {
+
+        $("#celebSearchBody").show();
+        $("#celebCarouselBody").hide();
+        $("#resultsBody").hide();
+        $("#aboutUsBody").hide();
+
+        $(".navbar-nav li").removeClass("active");
+        $(".navbar-nav li .homeLink").parent().addClass("active");
+        closeHamburberMenu();
+    });
+
+    //Attach event when user clicks on the carousel page link
+    $("#carouselLink").on("click", function () {
+
+        $("#celebSearchBody").hide();
+        $("#celebCarouselBody").show();
+        $("#resultsBody").hide();
+        $("#aboutUsBody").hide();
+
+        $(".navbar-nav li").removeClass("active");
+        $(".navbar-nav li #carouselLink").parent().addClass("active");
+        closeHamburberMenu();
+    });
+
+    //Attach event when user clicks on the results page link
+    $("#resultsLink").on("click", function () {
+
+        $("#celebSearchBody").hide();
+        $("#celebCarouselBody").hide();
+        $("#resultsBody").show();
+        $("#aboutUsBody").hide();
+
+        $(".navbar-nav li").removeClass("active");
+        $(".navbar-nav li #resultsLink").parent().addClass("active");
+        closeHamburberMenu();
+
+    });
+
+    $('.carousel').carousel({
+        interval: false
     });
 });
