@@ -9,6 +9,18 @@ var config = {
 };
 firebase.initializeApp(config);
 
+//Google SignIn Authentication function
+googleSignIn=()=>{
+    base_provider = new firebase.auth.GoogleAuthProvider()
+    firebase.auth().signInWithPopup(base_provider).then(function(result){
+       console.log(result);
+        console.log("Success Google Account Linked");
+    }).catch(function(err){
+        console.log(err);
+        console.log("Failed to connect");
+    })
+}
+
 //Hide carousel, results, and about us divs by default
 $("#celebCarouselBody").hide();
 $("#resultsBody").hide();
