@@ -28,6 +28,14 @@
     border-color: #34003C;
 }
 
+.processButton .fa-spinner {
+    display: none;
+}
+
+.processButton.active .fa-spinner {
+    display: inline-block;
+}
+
 .progress-bar {
     background-color: #630071;
 }
@@ -40,6 +48,44 @@
     width: calc(100% - 140px);
 
 }
+
+.card-header {
+    background-color:  #34003C
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    background-color: #34003C;
+    border-radius: 10px;
+}
+
+.carousel-indicators .active {
+    background-color: #34003C;
+}
+
+.carousel-indicators li {
+    background-color: #8b039e;
+}
+
+.pictureCard {
+    height: 580px;
+}
+
+.pictureCard .card-body, .pictureCard .carousel-inner, .pictureCard .carousel-item, .carousel {
+    height: 100%;
+}
+
+.pictureCard .card-body {
+    overflow: hidden;
+}
+
+.pictureCard .carousel-item img {
+    margin: 0 auto;
+}
+
+/* .pictureCard .carousel-item {
+    display: flex;
+    justify-content: center;
+} */
 
 /* Primary Color: #34003C */
 /* Secondary Color: #CCCCCC */
