@@ -194,4 +194,7 @@ $(document).ready(function () {
     $('.carousel').carousel({
         interval: false
     });
+
+    //Attaching on click function to signin button
+    $("#signInButton").on("click", googleSignIn);
 });
