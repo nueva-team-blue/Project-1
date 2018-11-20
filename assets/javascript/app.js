@@ -32,7 +32,7 @@ $(document).ready(function () {
     googleSignIn = () => {
         base_provider = new firebase.auth.GoogleAuthProvider()
         firebase.auth().signInWithPopup(base_provider).then(function (result) {
-            setCookie("doppleganger-authentication",result.user.email,30);
+            setCookie("doppleganger-authentication", result.user.email, 30);
             checkAuthentication();
             console.log(result);
             console.log("Success Google Account Linked");
@@ -98,7 +98,7 @@ $(document).ready(function () {
     $(".myImageUpload").on("change", function (event) {
 
         //Set image to default
-        $(".yourImg").attr("src", "assets/images/placeholder.jpg");
+        $(".yourImg").attr("src", "assets/images/placeholder.png");
 
         //Disable compare button
         $("#compareButton, #carouselCompareButton").attr("disabled", true);
@@ -109,36 +109,39 @@ $(document).ready(function () {
         //Get the file
         var file = event.target.files[0];
 
-        //Create storage ref
-        var storageRef = firebase.storage().ref(`Pictures/${file.name}`);
+        //Make sure file exists
+        if (file) {
+            //Create storage ref
+            var storageRef = firebase.storage().ref(`Pictures/${file.name}`);
 
-        //Upload file
-        var task = storageRef.put(file);
+            //Upload file
+            var task = storageRef.put(file);
 
-        //Update progress bar
-        task.on("state_changed",
+            //Update progress bar
+            task.on("state_changed",
 
-            function progress(snapshot) {
-                var percentage = (snapshot.bytesTransferred /
-                    snapshot.totalBytes) * 100;
+                function progress(snapshot) {
+                    var percentage = (snapshot.bytesTransferred /
+                        snapshot.totalBytes) * 100;
 
 
-                $(".progress-bar").width(`${percentage}%`);
-            },
+                    $(".progress-bar").width(`${percentage}%`);
+                },
 
-            function error(err) {
-                console.log(err);
-            },
+                function error(err) {
+                    console.log(err);
+                },
 
-            function complete() {
-                storageRef.getDownloadURL()
-                    .then((url) => {
+                function complete() {
+                    storageRef.getDownloadURL()
+                        .then((url) => {
 
-                        $(".yourImg").attr("src", url);
-                        $("#compareButton, #carouselCompareButton").attr("disabled", false);
-                    });
-            }
-        );
+                            $(".yourImg").attr("src", url);
+                            $("#compareButton, #carouselCompareButton").attr("disabled", false);
+                        });
+                }
+            );
+        }
     });
 
     //Function where if the hamburger menu button is visible then trigger an on 
@@ -247,22 +250,22 @@ $(document).ready(function () {
     //Attaching on click function to signin button
     $("#signInButton").on("click", googleSignIn);
     //function to check authentication cookie
-    function checkAuthentication (){
+    function checkAuthentication() {
         var dopplegangerAuthentication = getCookie("doppleganger-authentication")
         console.log(dopplegangerAuthentication)
-        if(dopplegangerAuthentication){
+        if (dopplegangerAuthentication) {
 
-            $("#signInButton").hide();            
+            $("#signInButton").hide();
         }
-        else{
-            $("#signInButton").show(); 
+        else {
+            $("#signInButton").show();
         }
     }
-    checkAuthentication(); 
+    checkAuthentication();
     //function that sets cookie
-    function setCookie(cname,cvalue,exdays) {
+    function setCookie(cname, cvalue, exdays) {
         var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
         var expires = "expires=" + d.toGMTString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
@@ -272,7 +275,7 @@ $(document).ready(function () {
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
         var ca = decodedCookie.split(';');
-        for(var i = 0; i < ca.length; i++) {
+        for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
             while (c.charAt(0) == ' ') {
                 c = c.substring(1);
