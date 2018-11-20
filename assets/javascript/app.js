@@ -1,37 +1,81 @@
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyD0ZvalX1bGNXAmc6BQZd8m9iJWIbl-4hQ",
-    authDomain: "doppelgangers-d712f.firebaseapp.com",
-    databaseURL: "https://doppelgangers-d712f.firebaseio.com",
-    projectId: "doppelgangers-d712f",
-    storageBucket: "doppelgangers-d712f.appspot.com",
-    messagingSenderId: "169783188463"
-};
-firebase.initializeApp(config);
-
-//Google SignIn Authentication function
-googleSignIn=()=>{
-    base_provider = new firebase.auth.GoogleAuthProvider()
-    firebase.auth().signInWithPopup(base_provider).then(function(result){
-       console.log(result);
-        console.log("Success Google Account Linked");
-    }).catch(function(err){
-        console.log(err);
-        console.log("Failed to connect");
-    })
-}
-
-//Hide carousel, results, and about us divs by default
-$("#celebCarouselBody").hide();
-$("#resultsBody").hide();
-$("#aboutUsBody").hide();
-
 
 $(document).ready(function () {
     var facePlusPlusApiKey = "JJQp0B8tMyOhqZrJ-xzyZSwSG95sOXLM";
     var facePlusPlusApiSecret = "N5PgkpS-JtqonjgCVz2yB89FGbpoITrP";
     $("#compareButton, #carouselCompareButton").attr("disabled", true);
 
+    //Hide carousel, results, and about us divs by default
+    $("#celebCarouselBody").hide();
+    $("#resultsBody").hide();
+    $("#aboutUsBody").hide();
+
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyD0ZvalX1bGNXAmc6BQZd8m9iJWIbl-4hQ",
+        authDomain: "doppelgangers-d712f.firebaseapp.com",
+        databaseURL: "https://doppelgangers-d712f.firebaseio.com",
+        projectId: "doppelgangers-d712f",
+        storageBucket: "doppelgangers-d712f.appspot.com",
+        messagingSenderId: "169783188463"
+    };
+    firebase.initializeApp(config);
+
+    // Initialize Cloud Firestore through Firebase
+    var db = firebase.firestore();
+
+    // Disable deprecated features
+    db.settings({
+        timestampsInSnapshots: true
+    });
+
+    //Google SignIn Authentication function
+    googleSignIn = () => {
+        base_provider = new firebase.auth.GoogleAuthProvider()
+        firebase.auth().signInWithPopup(base_provider).then(function (result) {
+            console.log(result);
+            console.log("Success Google Account Linked");
+
+            console.log(result.user.displayName);
+            console.log(result.user.email);
+
+            //Query the database to see if a user with the same email already exists
+            db.collection("users").where("email", "==", result.user.email)
+                .get()
+                .then(function (snapshot) {
+
+                    //User already exists in the database
+                    if (snapshot && snapshot.docs && snapshot.docs.length > 0) {
+                        console.log("User already exists in database: ", snapshot.docs[0].data());
+                    }
+                    //User does not exist in database. Add user to the database
+                    else {
+                        db.collection("users").add({
+                            displayName: result.user.displayName,
+                            email: result.user.email,
+                            photoURL: result.user.photoURL
+                        })
+                            .then(function (docRef) {
+                                console.log("User written to database with docID: ", docRef.id);
+                            })
+                            .catch(function (error) {
+                                console.error("Error adding user to database: ", error);
+                            });
+                    }
+
+                })
+                .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                });
+
+        }).catch(function (err) {
+            console.log(err);
+            console.log("Failed to connect");
+        })
+    }
+
+
+
+    //Function to compare faces using the face++ api
     function compareFace(celebImageUrl, myImageUrl) {
 
         myImageUrl = encodeURIComponent(myImageUrl);
@@ -50,6 +94,9 @@ $(document).ready(function () {
 
 
     $(".myImageUpload").on("change", function (event) {
+
+        //Set image to default
+        $(".yourImg").attr("src", "assets/images/placeholder.jpg");
 
         //Disable compare button
         $("#compareButton, #carouselCompareButton").attr("disabled", true);
@@ -104,13 +151,13 @@ $(document).ready(function () {
         }
     }
 
-    function activateAnimateButton (buttonElement) {
+    function activateAnimateButton(buttonElement) {
 
         buttonElement.addClass("active");
         buttonElement.attr("disabled", true);
     }
 
-    function deactivateAnimateButton (buttonElement) {
+    function deactivateAnimateButton(buttonElement) {
 
         buttonElement.removeClass("active");
         buttonElement.attr("disabled", false);
@@ -129,11 +176,11 @@ $(document).ready(function () {
 
                 percentElement.text(comparePercentage);
                 deactivateAnimateButton(buttonElement);
-            })            
-            .catch( (error) => {
+            })
+            .catch((error) => {
 
                 var errorMessage = "Error comparing image in face++";
-                
+
                 if (error && error.responseJSON && error.responseJSON.error_message) {
                     errorMessage = error.responseJSON.error_message;
                 }
@@ -143,14 +190,14 @@ $(document).ready(function () {
             });
     }
 
-    $("#compareButton").on("click", function() {
+    $("#compareButton").on("click", function () {
         handleCompareButtonClick($(this), $("#comparePercent"), $("#celebImg").attr("src"));
     });
 
-    $("#carouselCompareButton").on("click", function() {
+    $("#carouselCompareButton").on("click", function () {
         handleCompareButtonClick($(this), $("#carouselComparePercent"), $("#celebrityCarousel .carousel-item.active img").attr("src"));
     });
-    
+
     //Attach event when user clicks on the default page link
     $(".homeLink").on("click", function () {
 
