@@ -1,6 +1,23 @@
-.headQuestion {
-    
+
+.progress {
+    margin: 0px 0px 10px 0px;
 }
+/* login button on hover blends in too well. need a different color setup */
+    /* maybe a grey outline? possibly white
+     */
+/* active buttons need to have blue removed */
+
+/* need to choose which display format to use. carousel or search */
+
+/* does google sign in have its own symbol? */
+
+/* need to center the compare button on search */
+
+/* font styling changes slightly throughout page
+font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"; */
+
+/* put footer in---dynamic or static? */
+
 
 #fullNav {
     background-color: #34003C;
@@ -9,13 +26,14 @@
 .jumbotron {
     background-color: #CCC;
     color: #34003C;
+    border-bottom: solid 1px #34003C;
+    /* background-image: url("/assets/images/dg-logo-vGreyScale.png") */
 }
 .btn-primary {
     background-color: #630071;
     border-color: #630071;
     color: white;
 }
-
 
 .btn-primary:hover {
     background-color: #34003C;
@@ -27,17 +45,21 @@
     background-color: #34003C;
     border-color: #34003C;
 }
+.btn-primary:active {
+    border-color: #CCC!important;
+    background-color: #34003C!important;
+}
 
 .processButton .fa-spinner {
     display: none;
 }
-
 .processButton.active .fa-spinner {
     display: inline-block;
 }
 
 .progress-bar {
     background-color: #630071;
+
 }
 
 #tdmbSubmit {
@@ -68,6 +90,9 @@
 
 .pictureCard {
     height: 580px;
+    /* border-color: #34003C; */
+    border: solid 1px #34003C!important;
+    border-radius: .25rem;
 }
 
 .pictureCard .card-body, .pictureCard .carousel-inner, .pictureCard .carousel-item, .carousel {
@@ -82,6 +107,16 @@
     margin: 0 auto;
 }
 
+.bg-light {
+    background-color: #ccc!important;
+}
+
+.baseScoreboard {
+    background-color: #ccc;
+    border: solid 1px #34003C;
+    padding: 5px 0px 5px 0px;
+    border-radius: .25rem;
+}
 /* .pictureCard .carousel-item {
     display: flex;
     justify-content: center;
