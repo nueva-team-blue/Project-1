@@ -125,6 +125,10 @@ font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue"
     border-radius: .25rem;
 }
 
+#signInButton {
+    display: flex;
+}
+
 /* Primary Color: #34003C */
 /* Secondary Color: #CCCCCC */
 /* Tertiary Color:  White */

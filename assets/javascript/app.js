@@ -32,6 +32,8 @@ $(document).ready(function () {
     googleSignIn = () => {
         base_provider = new firebase.auth.GoogleAuthProvider()
         firebase.auth().signInWithPopup(base_provider).then(function (result) {
+            setCookie("doppleganger-authentication",result.user.email,30);
+            checkAuthentication();
             console.log(result);
             console.log("Success Google Account Linked");
 
@@ -244,4 +246,41 @@ $(document).ready(function () {
 
     //Attaching on click function to signin button
     $("#signInButton").on("click", googleSignIn);
+    //function to check authentication cookie
+    function checkAuthentication (){
+        var dopplegangerAuthentication = getCookie("doppleganger-authentication")
+        console.log(dopplegangerAuthentication)
+        if(dopplegangerAuthentication){
+
+            $("#signInButton").hide();            
+        }
+        else{
+            $("#signInButton").show(); 
+        }
+    }
+    checkAuthentication(); 
+    //function that sets cookie
+    function setCookie(cname,cvalue,exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    //getting the cookie
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    };
 });
