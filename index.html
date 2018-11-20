@@ -46,61 +46,61 @@
 			<p class="lead">
 				<h2>Have you ever wondered how closely you resemble a celebrity?</h2>
 			</p>
-			<p class="underLead">
+			<!-- <p class="underLead">
 				<h3>Here you can input your picture and compare yourself to thousands of celebrities.</h3>
-			</p>
+			</p> -->
 		</div>
 	</div>
 
 	<!-- main content area -->
 
 	<section id="celebSearchBody" class="container">
-		<div class="row">
-			<!-- Search Celebrity Content Goes Here -->
-			<div class="contentHead">
-				<p class="headQuestion" id="searchHead">Which celebrity do you look like?</p>
-				<p class="headQuestion" id="carouselHead">Compare yourself to these trending celebrities</p>
-				<p class="headQuestion" id="resultsHead">Here's how your results stack up</p>
-			</div>
-			<div class="photosSearch container">
-				<div class="row">
-					<div class="col-md-6 text-center myPhoto mb-3">
-						<!-- This section will be where we input and display personal photo -->
-						<img class="yourImg" hspace="50px" vspace="50px" height="300px" class="pr-1" src="assets/images/placeholder.jpg">
-						<div class="custom-file text-left mb-3">
-							<input id="myImageUpload" name="file" type="file" class="custom-file-input myImageUpload" accept=".jpg,.png"></input>
-							<label class="custom-file-label" for="myImageUpload">Choose file</label>
+			<div class="row">
+				<div class="col-md-12 col-lg-6 mb-4">
+					<div class="card card-default text-center pictureCard myPhoto">
+						<div class="card-header text-light">
+							<h3>Your Photo</h3>
 						</div>
-						<div class="progress">
-							<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+						<div class="card-body bg-light">
+							<img class="yourImg" hspace="50px" vspace="50px" height="300px" class="pr-1" src="assets/images/placeholder.jpg">
+							<div class="custom-file text-left mb-3">
+								<input id="myImageUpload" name="file" type="file" class="custom-file-input myImageUpload" accept=".jpg,.png">
+								<label class="custom-file-label" for="myImageUpload">Choose file</label>
+							</div>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 text-center searchPhoto mb-3">
-						<!-- Here there will be a search button and the displayed photo of celebrity -->
-						<img id="celebImg" hspace="50px" vspace="50px" height="300px" class="pl-1" src="http://www3.pictures.gi.zimbio.com/Cannes+Ocean+Thirteen+After+Party+7w8f5kCR9fKx.jpg">
-						<div class="searchForm">
-							<form class="form-inline justify-content-center searchForm">
-								<input class="form-control" type="text" id="celebritySearch" placeholder="Enter Celebrity Name">
-								<!-- This button will trigger our AJAX call to TMDB API -->
-								<input class="btn btn-primary" id="tdmbSubmit" type="submit" value="Search Celebrity">
-							</form>
+				</div>
+				<div class="col-md-12 col-lg-6 mb-4">
+					<div class="card card-default text-center pictureCard searchPhoto">
+						<div class="card-header text-light">
+							<h3>Celebrity Photo</span></h3>
+						</div>
+						<div class="card-body bg-light">
+							<img id="celebImg" hspace="50px" vspace="50px" height="300px" class="pl-1" src="http://www3.pictures.gi.zimbio.com/Cannes+Ocean+Thirteen+After+Party+7w8f5kCR9fKx.jpg">
+							<div class="searchForm">
+								<form class="form-inline justify-content-center searchForm">
+									<input class="form-control" type="text" id="celebritySearch" placeholder="Enter Celebrity Name">
+									<!-- This button will trigger our AJAX call to TMDB API -->
+									<input class="btn btn-primary" id="tdmbSubmit" type="submit" value="Search Celebrity">
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-12">
-						<button class="btn btn-primary processButton" id="compareButton">Compare <i class="fas fa-spinner fa-spin"></i></button>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<p>Percentage that your image compares to Brad Pitt: <span id="comparePercent"></span></p>
-					</div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center">
+					<button class="btn btn-primary mb-4 processButton" id="compareButton">Compare <i class="fas fa-spinner fa-spin"></i></button>
+					<p class="baseScoreboard">Percentage that your image compares to celebrity: <span id="comparePercent"></span></p>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+
+<!-- CAROUSEL SECTION -->
 	<section id="celebCarouselBody" class="container">
 		<div class="row">
 			<div class="col-md-12 col-lg-6 mb-4">
@@ -162,11 +162,12 @@
 		</div>
 		<div class="row">
 			<div class="col-12 text-center">
-				<button class="btn btn-primary processButton" id="carouselCompareButton">Compare <i class="fas fa-spinner fa-spin"></i></button>
-				<p>Percentage that your image compares to celebrity: <span id="carouselComparePercent"></span></p>
+				<button class="btn btn-primary mb-4 processButton" id="carouselCompareButton">Compare <i class="fas fa-spinner fa-spin"></i></button>
+				<p class="baseScoreboard">Percentage that your image compares to celebrity: <span id="carouselComparePercent"></span></p>
 			</div>
 		</div>
 	</section>
+	<!-- RESULTS SECTION -->
 	<section id="resultsBody" class="container">
 		<div class="row">
 			<!-- Results Content Goes Here -->
