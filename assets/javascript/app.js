@@ -243,25 +243,45 @@ $(document).ready(function () {
 
     });
 
+    //Initialize the carousel and force it to not auto rotate images
     $('.carousel').carousel({
         interval: false
     });
 
     //Attaching on click function to signin button
     $("#signInButton").on("click", googleSignIn);
+
     //function to check authentication cookie
     function checkAuthentication() {
         var dopplegangerAuthentication = getCookie("doppleganger-authentication")
         console.log(dopplegangerAuthentication)
         if (dopplegangerAuthentication) {
 
+            //Hide the sign in button
             $("#signInButton").hide();
+
+            //Get the profile image url from the database
+            db.collection("users").where("email", "==", dopplegangerAuthentication)
+            .get()
+            .then(function (snapshot) {
+
+                //User already exists in the database
+                if (snapshot && snapshot.docs && snapshot.docs.length > 0) {
+                    console.log(snapshot.docs[0].data().photoURL);
+
+                    //TODO: Here we will set the profile image element source to snapshot.docs[0].data().photoURL
+                }
+            });
         }
         else {
+            //Show the sign in button
             $("#signInButton").show();
         }
     }
+
+    //Check authtentication and hide necessary sections
     checkAuthentication();
+
     //function that sets cookie
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
@@ -286,4 +306,38 @@ $(document).ready(function () {
         }
         return "";
     };
+
+    //Choose a random picture from the carousel
+    function getRandomCarouselPic() {
+
+        //Spin the dice on the choose random button
+        $("#randomCarouselChoice .fa-dice").addClass("fa-spin");
+
+        //Assign local variables
+        var celebrityCarouselElement = $("#celebrityCarousel");
+        var carouselItems = celebrityCarouselElement.find(".carousel-item");
+
+        //Remove any existing on "slid.bs.carousel" event listeners
+        celebrityCarouselElement.off("slid.bs.carousel");
+
+        //Get a random index from the total number of itmes in the carousel
+        var randomNum = Math.floor(Math.random() * carouselItems.length);
+
+        //Force the carousel to start cycling
+        celebrityCarouselElement.carousel('next');
+        celebrityCarouselElement.on("slid.bs.carousel", function () {
+            celebrityCarouselElement.carousel('next');
+        });
+
+        //After 2 seconds stop the carousel from cycling, set the photo to the random number,
+        //and stop the dice from spinning
+        setTimeout(() => {
+            celebrityCarouselElement.off("slid.bs.carousel");
+            celebrityCarouselElement.carousel(randomNum);
+            $("#randomCarouselChoice .fa-dice").removeClass("fa-spin");
+        }, 2000);
+    };
+
+    //Add on click event to choose random button in carousel section
+    $("#randomCarouselChoice").on("click", getRandomCarouselPic);
 });
