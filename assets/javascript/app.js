@@ -9,6 +9,8 @@ $(document).ready(function () {
     $("#resultsBody").hide();
     $("#aboutUsBody").hide();
 
+    //Hide the results link in the navbar by default (will only be shown when logged in)
+    $("#resultsLink").hide();
 
     //Google SignIn Authentication function
     googleSignIn = () => {
@@ -30,7 +32,7 @@ $(document).ready(function () {
                     //User already exists in the database
                     if (snapshot && snapshot.docs && snapshot.docs.length > 0) {
                         console.log("User already exists in database: ", snapshot.docs[0].data());
-                    }
+                     }
                     //User does not exist in database. Add user to the database
                     else {
                         db.collection("users").add({
@@ -244,29 +246,34 @@ $(document).ready(function () {
             //Hide the sign in button
             $("#signInButton").hide();
 
+            //Show the results link in the navbar
+            $("#resultsLink").show();
+
             //Get the profile image url from the database
             db.collection("users").where("email", "==", dopplegangerAuthentication)
-            .get()
-            .then(function (snapshot) {
+                .get()
+                .then(function (snapshot) {
 
-                //User already exists in the database
-                if (snapshot && snapshot.docs && snapshot.docs.length > 0) {
-                    console.log(snapshot.docs[0].data().photoURL);
+                    //User already exists in the database
+                    if (snapshot && snapshot.docs && snapshot.docs.length > 0) {
+                        console.log(snapshot.docs[0].data().photoURL);
 
-                    //TODO: set the profile image element to yourimg 
+                        //Set the image source to the photo url from the fire database
                         $(".yourImg").attr("src", snapshot.docs[0].data().photoURL);
                         // enables the compare button
                         $("#compareButton, #carouselCompareButton").attr("disabled", false);
 
                         //Store the user's display name as an attribute on the signInButton element
                         $("#signInButton").attr("data-user-display-name", snapshot.docs[0].data().displayName);
-                        
-                }
-            });
+
+                    }
+                });
         }
         else {
             //Show the sign in button
             $("#signInButton").show();
+            //Hide the results link in the navbar
+            $("#resultsLink").hide();
         }
     }
 
