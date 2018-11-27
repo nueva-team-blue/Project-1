@@ -33,7 +33,6 @@ $(document).ready(function () {
         base_provider = new firebase.auth.GoogleAuthProvider()
         firebase.auth().signInWithPopup(base_provider).then(function (result) {
             setCookie("doppleganger-authentication", result.user.email, 30);
-            checkAuthentication();
             console.log(result);
             console.log("Success Google Account Linked");
 
@@ -54,7 +53,8 @@ $(document).ready(function () {
                         db.collection("users").add({
                             displayName: result.user.displayName,
                             email: result.user.email,
-                            photoURL: result.user.photoURL
+                            photoURL: result.user.photoURL,
+                            userHistory:[]
                         })
                             .then(function (docRef) {
                                 console.log("User written to database with docID: ", docRef.id);
@@ -63,6 +63,7 @@ $(document).ready(function () {
                                 console.error("Error adding user to database: ", error);
                             });
                     }
+                    checkAuthentication();
 
                 })
                 .catch(function (error) {
