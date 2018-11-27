@@ -78,7 +78,6 @@ $(document).ready(function () {
         }
     }
 
-
     //Check when anything changes on the scoreboard collection within the fire database
     scoreboardCollection.onSnapshot(function (spanpshot) { 
 
@@ -92,9 +91,21 @@ $(document).ready(function () {
                 return b.data().comparePercent - a.data().comparePercent;
             });
 
-            console.log("scoreboard value changed", snapshotDocs);
+            //Empty the global results of all existing data
+            $("#globalResults").empty();
 
-            //TODO: Populate the scoreboard part of the results screen
+            //Create the ol (ordered list) element
+            var ol = $("<ol>");
+
+            //Loop thru the scoreboard docs which will already be in highest to lowest order
+            snapshotDocs.forEach(function(doc) {
+              
+                //Append the list item to the ol element
+                ol.append(`<li>${doc.data().userName} looks ${doc.data().comparePercent}% like ${doc.data().celebrityName}</li>`);
+            });
+
+            //Append the ordered list element to the global results div
+            $("#globalResults").append(ol);
         }
     });
 
