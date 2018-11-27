@@ -27,7 +27,7 @@ font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue"
     /* background: linear-gradient(#CCC, #630071); */
     color: #34003C;
     border-bottom: solid 1px #34003C;
-    background-image: url("../../assets/images/escheresque-dark.png");
+    /* background-image: url("../../assets/images/escheresque-dark.png"); */
     background-image: color(#34003C);
 }
 .btn-primary {
@@ -84,7 +84,7 @@ font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue"
 }
 
 .card-body {
-    background: linear-gradient(#630071, #CCC);
+    /* background: linear-gradient(#630071, #CCC); */
 }
 
 .carousel-control-next-icon, .carousel-control-prev-icon {
