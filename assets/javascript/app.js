@@ -270,6 +270,7 @@ $(document).ready(function () {
                     console.log(snapshot.docs[0].data().photoURL);
 
                     //TODO: Here we will set the profile image element source to snapshot.docs[0].data().photoURL
+                        $(".yourImg").attr("src", snapshot.docs[0].data().photoURL);
                 }
             });
         }
