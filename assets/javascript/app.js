@@ -269,7 +269,11 @@ $(document).ready(function () {
                 if (snapshot && snapshot.docs && snapshot.docs.length > 0) {
                     console.log(snapshot.docs[0].data().photoURL);
 
-                    //TODO: Here we will set the profile image element source to snapshot.docs[0].data().photoURL
+                    //TODO: set the profile image element to yourimg 
+                        $(".yourImg").attr("src", snapshot.docs[0].data().photoURL);
+                        // enables the compare button
+                        $("#compareButton, #carouselCompareButton").attr("disabled", false);
+                        
                 }
             });
         }
