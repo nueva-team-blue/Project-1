@@ -90,7 +90,7 @@
 					</div>
 					<div class="card-footer bg-light">
 						<div class="searchForm">
-							<p id="celebSearchName">&nbsp;</p>
+							<p id="celebSearchName">Brad Pitt</p>
 							<form class="form-inline justify-content-center searchForm">
 								<input class="form-control" type="text" id="celebritySearch" placeholder="Enter Celebrity Name">
 								<!-- This button will trigger our AJAX call to TMDB API -->
@@ -121,13 +121,13 @@
 						<img class="yourImg" class="mb-3 pr-1" src="assets/images/placeholder.png">
 					</div>
 					<div class="card-footer bg-light">
-						<div class="custom-file text-left mb-3">
-							<input id="myImageUpload2" name="file" type="file" class="custom-file-input myImageUpload" accept=".jpg,.png"></input>
-							<label class="custom-file-label" for="myImageUpload2">Choose file</label>
-						</div>
-						<div class="progress">
+						<div class="progress mt-3">
 							<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 							</div>
+						</div>
+						<div class="custom-file text-left">
+							<input id="myImageUpload2" name="file" type="file" class="custom-file-input myImageUpload" accept=".jpg,.png"></input>
+							<label class="custom-file-label" for="myImageUpload2">Choose file</label>
 						</div>
 					</div>
 				</div>
@@ -201,7 +201,7 @@
 					<div class="card-body bg-light" id="userResults">
 						<!-- Your results here -->
 						<!-- BEST 10 RESULTS -->
-							<!-- Name and Percentage -->
+						<!-- Name and Percentage -->
 						<ol class="userBestList">
 							<li>You are 96% a lookalike to Brad Pitt</li>
 							<li>2</li>
@@ -213,7 +213,7 @@
 							<li>8</li>
 							<li>9</li>
 							<li>10</li>
-						</ol>						
+						</ol>
 					</div>
 				</div>
 			</div>
@@ -225,14 +225,14 @@
 					<div class="card-body bg-light" id="globalResults">
 						<!-- Global Results HERE -->
 						<!-- Best 10 Lookalikes Globally -->
-							<!-- Name and Percentage -->
+						<!-- Name and Percentage -->
 						<!-- Look Through our firebase results -->
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	
+
 	<section id="aboutUsBody" class="container">
 		<div class="row">
 			<!-- A section about us at 8-10weeks bootcamp--
@@ -250,8 +250,10 @@
 	<!--Add firebase-->
 	<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
 	<!--Custom javascript-->
+	<script src="assets/javascript/firebaseInitialize.js"></script>
 	<script src="assets/javascript/celebrityapi.js"></script>
 	<script type="text/javascript" src="assets/javascript/app.js"></script>
+	<script src="assets/javascript/scoreboard.js"></script>
 </body>
 
 </html>

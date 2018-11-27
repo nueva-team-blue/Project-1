@@ -9,24 +9,6 @@ $(document).ready(function () {
     $("#resultsBody").hide();
     $("#aboutUsBody").hide();
 
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyD0ZvalX1bGNXAmc6BQZd8m9iJWIbl-4hQ",
-        authDomain: "doppelgangers-d712f.firebaseapp.com",
-        databaseURL: "https://doppelgangers-d712f.firebaseio.com",
-        projectId: "doppelgangers-d712f",
-        storageBucket: "doppelgangers-d712f.appspot.com",
-        messagingSenderId: "169783188463"
-    };
-    firebase.initializeApp(config);
-
-    // Initialize Cloud Firestore through Firebase
-    var db = firebase.firestore();
-
-    // Disable deprecated features
-    db.settings({
-        timestampsInSnapshots: true
-    });
 
     //Google SignIn Authentication function
     googleSignIn = () => {
@@ -180,6 +162,8 @@ $(document).ready(function () {
                 var comparePercentage = response.confidence ? response.confidence : 0;
 
                 percentElement.text(comparePercentage);
+                //Trigger change event on percentage element
+                percentElement.change();
                 deactivateAnimateButton(buttonElement);
             })
             .catch((error) => {
@@ -273,6 +257,9 @@ $(document).ready(function () {
                         $(".yourImg").attr("src", snapshot.docs[0].data().photoURL);
                         // enables the compare button
                         $("#compareButton, #carouselCompareButton").attr("disabled", false);
+
+                        //Store the user's display name as an attribute on the signInButton element
+                        $("#signInButton").attr("data-user-display-name", snapshot.docs[0].data().displayName);
                         
                 }
             });
