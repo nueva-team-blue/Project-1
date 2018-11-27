@@ -8,7 +8,7 @@ $(document).ready(function () {
 
         //If the response and results are defined
         if (response && response.results) {
-            
+
             var celebrityCarousel = $("#celebrityCarousel .carousel-inner");
 
             //Remove all images from the celebrity carousel
@@ -19,16 +19,19 @@ $(document).ready(function () {
                 var result = response.results[i];
 
                 if (result.profile_path) {
-                    
+
                     var carouselItem = $("<div class='carousel-item'>");
 
                     //Set the first item as active
-                    if (i === 0){
+                    if (i === 0) {
+                        //Add the active class to the carousel item
                         carouselItem.addClass("active");
+                        //Set the name of the celebrity on the text of the p element
+                        $("#celebCarouselName").text(result.name);
                     }
 
                     var celebImgUrl = `https://image.tmdb.org/t/p/w500${result.profile_path}`;
-                    var celebImg = $(`<img class="celebImg" src="${celebImgUrl}">`);
+                    var celebImg = $(`<img class="celebImg" src="${celebImgUrl}" data-celeb-name="${result.name}">`);
                     carouselItem.append(celebImg);
 
                     //Add the carousel item to the celebrity carousel
@@ -36,6 +39,16 @@ $(document).ready(function () {
                 }
             }
         }
+    });
+
+    //Attach an event to the carousel when the image changes
+    $('#celebrityCarousel').on('slide.bs.carousel', function (event) {
+
+        //Get the celebrity name from the "data-celeb-name" attribute for the active image on the carousel
+        var celebName = $(event.relatedTarget).find("img").attr("data-celeb-name");
+
+        //Set the name of the celebrity on the text of the p element
+        $("#celebCarouselName").text(celebName);
     });
 
     //Celebrity search button on click function
@@ -58,7 +71,12 @@ $(document).ready(function () {
 
                 //Set the celebrity image url
                 var celebImgUrl = `https://image.tmdb.org/t/p/w500${response.results[0].profile_path}`;
-                $("#celebImg").attr("src", celebImgUrl);
+                $("#celebImg").attr("src", celebImgUrl).attr("data-celeb-name", response.results[0].name);
+
+                //Update the celebrity name displayed
+                $("#celebSearchName").text(response.results[0].name);
+                //Set the name of the celebrity on the text of the p element
+                $("#celebSearchName").text(response.results[0].name);
             }
         });
     });
