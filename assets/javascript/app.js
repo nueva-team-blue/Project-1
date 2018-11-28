@@ -11,10 +11,8 @@ $(document).ready(function () {
     //Disable the compare buttons by default
     $("#compareButton, #carouselCompareButton").attr("disabled", true);
 
-    //Hide carousel, results, and about us divs by default
-    $("#celebCarouselBody").hide();
-    $("#resultsBody").hide();
-    $("#aboutUsBody").hide();
+    //Display the celebrity search section by default
+    showHideSections(`.homeLink`, `#celebSearchBody`);
 
     //Hide the results link in the navbar by default (will only be shown when logged in)
     $("#resultsLink").hide();
@@ -236,44 +234,40 @@ $(document).ready(function () {
     });
 
     //Attach event when user clicks on the default page link
-    $(".homeLink").on("click", function () {
-
-        $("#celebSearchBody").show();
-        $("#celebCarouselBody").hide();
-        $("#resultsBody").hide();
-        $("#aboutUsBody").hide();
-
-        $(".navbar-nav li").removeClass("active");
-        $(".navbar-nav li .homeLink").parent().addClass("active");
-        closeHamburberMenu();
-    });
+    //Function will show or hide sections of the page
+    $(".homeLink").on("click", () => showHideSections(`.homeLink`, `#celebSearchBody`));
 
     //Attach event when user clicks on the carousel page link
-    $("#carouselLink").on("click", function () {
-
-        $("#celebSearchBody").hide();
-        $("#celebCarouselBody").show();
-        $("#resultsBody").hide();
-        $("#aboutUsBody").hide();
-
-        $(".navbar-nav li").removeClass("active");
-        $(".navbar-nav li #carouselLink").parent().addClass("active");
-        closeHamburberMenu();
-    });
+    //Function will show or hide sections of the page
+    $("#carouselLink").on("click", () => showHideSections(`#carouselLink`, `#celebCarouselBody`));
 
     //Attach event when user clicks on the results page link
-    $("#resultsLink").on("click", function () {
+    //Function will show or hide sections of the page
+    $("#resultsLink").on("click", () => showHideSections(`#resultsLink`, `#resultsBody`));
 
-        $("#celebSearchBody").hide();
-        $("#celebCarouselBody").hide();
-        $("#resultsBody").show();
-        $("#aboutUsBody").hide();
+    //Function will show or hide sections depending on what link the user clicked on the navbar
+    function showHideSections(navBarLinkElement, pageSectionToShow) {
 
+        //Create an array will all the ids for the page sections that we will hide
+        var pageSectionsToHide = ["#celebSearchBody", "#celebCarouselBody", "#resultsBody", "#aboutUsBody"];
+
+        //Remove the page section will will show from the pageSectionsToHide array
+        pageSectionsToHide.splice(pageSectionsToHide.indexOf(pageSectionToShow), 1);
+
+        //Convert pageSectionsToHide array to a string and seperate each with a comma by using join then use
+        //that as the jQuery selector and the hide method to hide those sections
+        $(pageSectionsToHide.join(',')).hide();
+
+        //Show the appropriate page section
+        $(pageSectionToShow).show();
+
+        //Remove the active class from all the links on the nav bar
         $(".navbar-nav li").removeClass("active");
-        $(".navbar-nav li #resultsLink").parent().addClass("active");
+        //Add the active class to the parent element of the nav bar link element that was clicked
+        $(navBarLinkElement).parent().addClass("active");
+        //Close the hamburger menu if it's being displayed on smaller screens
         closeHamburberMenu();
-
-    });
+    }
 
     //Initialize the carousel and force it to not auto rotate images
     $('.carousel').carousel({
