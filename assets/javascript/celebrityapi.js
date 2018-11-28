@@ -14,9 +14,16 @@ $(document).ready(function () {
             //Remove all images from the celebrity carousel
             celebrityCarousel.empty();
 
-            //Loop thru all the results and create divs and images for each
-            for (var i = 0; i < response.results.length && i <= 10; i++) {
-                var result = response.results[i];
+            var sortedResults = response.results;
+            
+            //Sort the results by popularity descending
+            sortedResults.sort(function(a, b) {
+                return b.popularity - a.popularity;
+            });
+
+            //Loop thru all the results and create divs and images for each (top 10)
+            for (var i = 0; i < sortedResults.length && i < 10; i++) {
+                var result = sortedResults[i];
 
                 if (result.profile_path) {
 
