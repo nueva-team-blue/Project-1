@@ -50,6 +50,9 @@ font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue"
     opacity: .5;
     background-color: #34003C;
     border-color: #34003C;
+    box-shadow: none !important;
+    outline-color: unset !important;
+    border-color: unset !important;
 }
 .btn-primary:active {
     border-color: #CCC!important;
