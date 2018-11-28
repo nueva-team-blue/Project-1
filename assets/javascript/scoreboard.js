@@ -10,7 +10,7 @@ $(document).ready(function () {
     function addToScoreboard() {
 
         //Check to make sure the user is logged in
-        var dopplegangerAuthentication = getCookie("doppleganger-authentication");
+        var dopplegangerAuthentication = getCookie(authenticationCookieName);
 
         //Only run function if the user is logged in
         if (dopplegangerAuthentication) {
