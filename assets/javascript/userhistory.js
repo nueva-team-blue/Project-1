@@ -66,7 +66,10 @@ $(document).ready(function () {
 
             //Sort the documents by timestamp (recent to oldest)
             snapshotDocs.sort(function (a, b) {
-                return b.data().timestamp.seconds - a.data().timestamp.seconds;
+                var timestampA = a.data().timestamp ? a.data().timestamp.seconds : new Date();
+                var timestampB = b.data().timestamp ? b.data().timestamp.seconds : new Date();
+
+                return timestampB - timestampA;
             });
 
             //Empty the global results of all existing data
@@ -79,7 +82,7 @@ $(document).ready(function () {
             snapshotDocs.forEach(function (doc) {
 
                 //Append the list item to the ol element
-                ol.append(`<li> ${doc.data().comparePercent}% like ${doc.data().celebrityName}</li>`);
+                ol.append(`<li><strong> ${doc.data().comparePercent}%</strong> like <em>${doc.data().celebrityName}</em></li>`);
             });
 
             //Append the ordered list element to the your results div
