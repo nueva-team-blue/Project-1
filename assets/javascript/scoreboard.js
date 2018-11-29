@@ -79,12 +79,12 @@ $(document).ready(function () {
     }
 
     //Check when anything changes on the scoreboard collection within the fire database
-    scoreboardCollection.onSnapshot(function (spanpshot) { 
+    scoreboardCollection.onSnapshot(function (snapshot) { 
 
         //Check to make sure that there are docs
-        if (spanpshot && spanpshot.docs && spanpshot.docs.length > 0) {
+        if (snapshot && snapshot.docs && snapshot.docs.length > 0) {
 
-            var snapshotDocs = spanpshot.docs;
+            var snapshotDocs = snapshot.docs;
 
             //Sort the documents by compare percent (highest to lowest)
             snapshotDocs.sort(function(a, b) {
