@@ -101,7 +101,7 @@ $(document).ready(function () {
             snapshotDocs.forEach(function(doc) {
               
                 //Append the list item to the ol element
-                ol.append(`<li>${doc.data().userName} looks ${doc.data().comparePercent}% like ${doc.data().celebrityName}</li>`);
+                ol.append(`<li><em>${doc.data().userName}</em> looks <strong>${doc.data().comparePercent}%</strong> like <em>${doc.data().celebrityName}</em></li>`);
             });
 
             //Append the ordered list element to the global results div
