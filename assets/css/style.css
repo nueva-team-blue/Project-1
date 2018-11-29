@@ -164,26 +164,6 @@ font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue"
     box-shadow: 0px 4px 8px 0px #888888;
 }
 
-<<<<<<< HEAD
-footer {
-    background-color: #34003C;
-    color: white;
-    width: 100%;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    text-align: center;
-    vertical-align: middle;
-    margin-top: 5px;
-}
-.footerLogos {
-    height: 56px;
-    background-color: #34003C;
-}
-.footerLogosRight {
-    height: 26px;
-    margin-top: 15px;
-
-}
-=======
 /*particle div style*/
 #particles-js{
     width: 100%;
@@ -193,15 +173,10 @@ footer {
     z-index: -100;
     top: 0;
   }
->>>>>>> master
 
 @media only screen and (max-width: 576px) {
     .jumbotronTitle {
-        margin-top: 15px;
-        font-size: 1.6rem;
-    }
-    .lead, h2 {
-        font-size: 1.3rem;
+        font-size: 2.7rem;
     }
 }
 
