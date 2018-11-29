@@ -1,4 +1,11 @@
 
+body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
 .progress {
     margin: 0px 0px 10px 0px;
 }
@@ -23,7 +30,7 @@ font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue"
     color: white;
 }
 .jumbotron {
-    background-color: #CCC;
+    background: rgb(204,204,204,.9);
     color: #34003C;
     border-bottom: solid 1px #34003C;
     /* background-image: url("/assets/images/dg-logo-vGreyScale.png") */
@@ -156,6 +163,16 @@ font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue"
 .navbar {
     box-shadow: 0px 4px 8px 0px #888888;
 }
+
+/*particle div style*/
+#particles-js{
+    width: 100%;
+    height: 100%;
+    /* background-color: white; */
+    position: fixed;
+    z-index: -100;
+    top: 0;
+  }
 
 @media only screen and (max-width: 576px) {
     .jumbotronTitle {
