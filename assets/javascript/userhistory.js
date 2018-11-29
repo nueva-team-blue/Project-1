@@ -79,10 +79,13 @@ $(document).ready(function () {
             var ol = $("<ol>");
 
             //Loop thru the scoreboard docs which will already be in highest to lowest order
-            snapshotDocs.forEach(function (doc) {
+            snapshotDocs.forEach(function (doc, index) {
 
-                //Append the list item to the ol element
-                ol.append(`<li><strong> ${doc.data().comparePercent}%</strong> like <em>${doc.data().celebrityName}</em></li>`);
+                //Only create a list item for the top 10 snapshot docs
+                if (index < 10) {
+                    //Append the list item to the ol element
+                    ol.append(`<li><strong> ${doc.data().comparePercent}%</strong> like <em>${doc.data().celebrityName}</em></li>`);
+                }
             });
 
             //Append the ordered list element to the your results div
