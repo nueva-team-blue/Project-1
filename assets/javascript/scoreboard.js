@@ -79,12 +79,12 @@ $(document).ready(function () {
     }
 
     //Check when anything changes on the scoreboard collection within the fire database
-    scoreboardCollection.onSnapshot(function (spanpshot) { 
+    scoreboardCollection.onSnapshot(function (snapshot) { 
 
         //Check to make sure that there are docs
-        if (spanpshot && spanpshot.docs && spanpshot.docs.length > 0) {
+        if (snapshot && snapshot.docs && snapshot.docs.length > 0) {
 
-            var snapshotDocs = spanpshot.docs;
+            var snapshotDocs = snapshot.docs;
 
             //Sort the documents by compare percent (highest to lowest)
             snapshotDocs.sort(function(a, b) {
@@ -101,7 +101,7 @@ $(document).ready(function () {
             snapshotDocs.forEach(function(doc) {
               
                 //Append the list item to the ol element
-                ol.append(`<li>${doc.data().userName} looks ${doc.data().comparePercent}% like ${doc.data().celebrityName}</li>`);
+                ol.append(`<li><em>${doc.data().userName}</em> looks <strong>${doc.data().comparePercent}%</strong> like <em>${doc.data().celebrityName}</em></li>`);
             });
 
             //Append the ordered list element to the global results div
