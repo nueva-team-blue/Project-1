@@ -31,6 +31,8 @@ Firebase/store/storage--Just during our presentation, firebase was returning an 
 
 CSS -- The only real problem was trying multiple "looks" and not feeling satisfied with anything to overly done.  We landed on a simple look that clearly displays on any device and is very responsive.
 
+Face++ -- Sporadic errors started occuring when calling Face++ during live demo. Would like to log these errors and determine how to gracefully handle these. Possibly have it wait a second and automically attempt to call Face++ again. 
+
 -----------------------------------
 
 If we had more time we would like to go back and try and implement Facebook authentication as well as the ability to log off of either platform.
