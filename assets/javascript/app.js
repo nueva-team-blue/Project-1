@@ -304,6 +304,11 @@ $(document).ready(function () {
                         //Store the user's display name as an attribute on the signInButton element
                         $("#signInButton").attr("data-user-display-name", snapshot.docs[0].data().displayName);
 
+                        //If user history variable does not exist then assign it
+                        if (!userHistory) {
+                            assignUserHistoryVar(snapshot);
+                        }
+
                     }
                 });
         }
@@ -317,31 +322,6 @@ $(document).ready(function () {
 
     //Check authtentication and hide necessary sections
     checkAuthentication();
-
-    //function that sets cookie
-    function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires=" + d.toGMTString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    //getting the cookie
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    };
 
     //Choose a random picture from the carousel
     function getRandomCarouselPic() {
@@ -377,3 +357,28 @@ $(document).ready(function () {
     //Add on click event to choose random button in carousel section
     $("#randomCarouselChoice").on("click", getRandomCarouselPic);
 });
+
+//getting the cookie
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+};
+
+//function that sets cookie
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+};
